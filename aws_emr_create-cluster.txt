@@ -1,0 +1,11 @@
+aws emr create-cluster \
+ --name "SparkIcebergLakeClusterSmall122" \
+ --log-uri "s3n://emr1dur/" \
+ --release-label "emr-6.15.0" \
+ --service-role "arn:aws:iam::010735859900:role/EMR_DefaultRole" \
+ --ec2-attributes '{"InstanceProfile":"EMR_EC2_DefaultRole","EmrManagedMasterSecurityGroup":"sg-0d06ac024f8f6c6a8","EmrManagedSlaveSecurityGroup":"sg-096a26d85ea72900c","KeyName":"lake2","SubnetId":"subnet-002b4a715ea8d4d26"}' \
+ --applications Name=Hadoop Name=Hive Name=JupyterEnterpriseGateway Name=Spark \
+ --configurations '[{"Classification":"hive-site","Properties":{"hive.metastore.client.factory.class":"com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"}},{"Classification":"spark-hive-site","Properties":{"hive.metastore.client.factory.class":"com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"}}]' \
+ --instance-groups '[{"InstanceCount":1,"InstanceGroupType":"CORE","Name":"Core","InstanceType":"i3.xlarge","EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"VolumeType":"gp2","SizeInGB":32},"VolumesPerInstance":2}],"EbsOptimized":true},"Configurations":[{"Classification":"iceberg-defaults","Properties":{"iceberg.enabled":"true"}}]},{"InstanceCount":1,"InstanceGroupType":"TASK","Name":"Task - 1","InstanceType":"i3.xlarge","EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"VolumeType":"gp2","SizeInGB":32},"VolumesPerInstance":2}],"EbsOptimized":true},"Configurations":[{"Classification":"iceberg-defaults","Properties":{"iceberg.enabled":"true"}}]},{"InstanceCount":1,"InstanceGroupType":"MASTER","Name":"Primary","InstanceType":"i3.xlarge","EbsConfiguration":{"EbsBlockDeviceConfigs":[{"VolumeSpecification":{"VolumeType":"gp2","SizeInGB":32},"VolumesPerInstance":2}],"EbsOptimized":true},"Configurations":[{"Classification":"iceberg-defaults","Properties":{"iceberg.enabled":"true"}}]}]' \
+ --scale-down-behavior "TERMINATE_AT_TASK_COMPLETION" \
+ --region "us-west-2"
