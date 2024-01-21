@@ -7,6 +7,8 @@
 
 The project conducted a comprehensive performance comparison between two popular open-source table format and storage layer solutions - Apache Iceberg and Delta Lake. The evaluation took place on an AWS EMR (Elastic MapReduce) cluster, providing insights into their efficiency, scalability, and compatibility within a distributed big data processing environment. To make the performance measurements comparable, one dataset from the TPC-DS benchmarks was used to create tables with the two different table formats.
 
+![Project Logo](awsarchitecture.svg)
+
 ## 2. Repository
 
 GitHub Repository: [https://github.com/DurlacherT/aws_emr_lakehouse](https://github.com/DurlacherT/aws_emr_lakehouse)
